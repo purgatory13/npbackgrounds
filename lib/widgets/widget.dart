@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:npbackgrounds/model/wallpaper_model.dart';
+import 'package:npbackgrounds/views/image_view.dart';
 
 Widget brandName(){
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: <Widget>[
-    Text("National Parks", style: TextStyle(color: Colors.black87),),
-    Text(" Wallpaper", style: TextStyle(color: Colors.blueGrey),)
-  ],);
+  return RichText(
+    text: TextSpan(
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+    children: <TextSpan>[
+    TextSpan(text: 'National Parks ', style: TextStyle(color: Colors.blueGrey)),
+    TextSpan(text: 'Wallpaper', style: TextStyle(color: Colors.black87)),
+  ],
+  ),
+  );
 }
 
 Widget wallpapersList({List<WallpaperModel> wallpapers, context}){
@@ -23,10 +27,22 @@ Widget wallpapersList({List<WallpaperModel> wallpapers, context}){
         crossAxisSpacing: 6.0,
         children: wallpapers.map((wallpaper){
           return GridTile(
-            child: Container(
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: Image.network(wallpaper.src.portrait, fit: BoxFit.cover,))
+            child: GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => ImageView(
+                    imgUrl: wallpaper.src.portrait,
+                  )
+                ));
+              },
+              child: Hero(
+                tag: wallpaper.src.portrait,
+                child: Container(
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.network(wallpaper.src.portrait, fit: BoxFit.cover,))
+                ),
+              ),
             ),
           );
   }).toList(),

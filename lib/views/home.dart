@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:npbackgrounds/data/data.dart';
 import 'package:npbackgrounds/model/categories_model.dart';
 import 'package:npbackgrounds/model/wallpaper_model.dart';
+import 'package:npbackgrounds/views/category.dart';
+import 'package:npbackgrounds/views/image_view.dart';
 import 'package:npbackgrounds/views/search.dart';
 import 'package:npbackgrounds/widgets/widget.dart';
 import 'package:http/http.dart' as http;
@@ -118,21 +120,31 @@ class CategoriesTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(right: 4),
-      child: Stack(children: <Widget>[
-        ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-            child: Image.network(imgUrl, height: 50, width: 100, fit: BoxFit.cover)),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.black26,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          height: 50, width: 100,
-          alignment: Alignment.center,
-          child: Text(title, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 14),),)
-      ],),
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context) => Category(
+            categoryName: title.toLowerCase(),
+          )
+        ));
+      },
+      child: Container(
+        margin: EdgeInsets.only(right: 4),
+        child: Stack(children: <Widget>[
+          ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+                child: Image.network(imgUrl, height: 50, width: 100, fit: BoxFit.cover)),
+
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.black26,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            height: 50, width: 100,
+            alignment: Alignment.center,
+            child: Text(title, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 14),),)
+        ],),
+      ),
     );
   }
 }
